@@ -25,5 +25,5 @@ int main() {
 
 	killRender();
 
-	return 0;
+	return EXIT_SUCCESS;
 }

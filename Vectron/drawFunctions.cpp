@@ -3,12 +3,11 @@
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 
-float thickness = 4.0;
+float thickness = 8.0;
 
 
 
 void initWindow(int windowSizeX, int windowSizeY) {
-	cout << "In init\n";
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_CreateWindowAndRenderer(windowSizeX, windowSizeY, 0, &window, &renderer);
 	SDL_RenderSetScale(renderer, 1, 1); //initialize window
@@ -18,7 +17,6 @@ void initWindow(int windowSizeX, int windowSizeY) {
 }
 
 void drawVec(SDL_Point pts[], SDL_Color color) {
-	cout << "In draw\n";
 	float x0 = pts[0].x;
 	float x1 = pts[1].x;
 
@@ -27,10 +25,10 @@ void drawVec(SDL_Point pts[], SDL_Color color) {
 
 	float dx = x1 - x0;
 	float dy = y1 - y0;
-	float length = sqrt((dx * dx) + (dy * dy));
+	float length = sqrt((dx * dx) + (dy * dy)); //find length of vector
 
 	float ptx = (-dy / length) * (thickness / 2.0f);
-	float pty = (dx / length) * (thickness / 2.0f);
+	float pty = (dx / length) * (thickness / 2.0f); //calculate offsets from origin points for rect
 
 	struct SDL_Vertex verts[4];
 	verts[0].position = { x0 + ptx, y0 + pty };
@@ -49,6 +47,14 @@ void drawVec(SDL_Point pts[], SDL_Color color) {
 	SDL_RenderGeometry(renderer, nullptr, verts, 4, indices, 6); //draw
 }
 
+void drawVectorPic(SDL_Point verts[], int connections[], SDL_Color color, int scale_factor) {
+
+}
+
+void scaleVectorPic(SDL_Point verts[], int scale_factor){  //must pass reference!!!
+
+}
+
 void renderFrame() {
 	SDL_RenderPresent(renderer);
 	SDL_Delay(3000); //better time function will come soon
@@ -62,7 +68,6 @@ void clearScreen() {
 }
 
 void killRender() {
-	cout << "In destroy\n";
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();//deallocate and close
