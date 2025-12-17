@@ -3,7 +3,7 @@
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 
-float thickness = 8.0;
+float thickness = 2.0;
 
 
 
@@ -42,16 +42,17 @@ void drawVec(SDL_Point pts[], SDL_Color color) {
 
 	const int indices[6] = { 0, 1, 2, 2, 3, 0 };
 
-	SDL_SetRenderDrawColor(renderer, 0, 0, 128, 255); //set color to blue for now
-
 	SDL_RenderGeometry(renderer, nullptr, verts, 4, indices, 6); //draw
 }
 
-void drawVectorPic(SDL_Point verts[], int connections[], SDL_Color color, int scale_factor) {
-
+void drawVectorPic(SDL_Point verts[], int indices[], int indiceCt, SDL_Color color, int scaleFactor) {
+	for (int i = 0; i < indiceCt - 1; i += 2) {
+		SDL_Point pts[2] = {verts[indices[i]],verts[indices[i+1]]};
+		drawVec(pts, color);
+	} //read two indices, get the points from verts and draw a line between
 }
 
-void scaleVectorPic(SDL_Point verts[], int scale_factor){  //must pass reference!!!
+void scaleVectorPic(SDL_Point verts[], int scaleFactor){  //must pass verts by reference!!!
 
 }
 
