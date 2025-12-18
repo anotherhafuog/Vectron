@@ -3,17 +3,15 @@
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 
-float thickness = 2.0;
+float thickness;
 
 
-
-void initWindow(int windowSizeX, int windowSizeY) {
+void initWindow(int windowSizeX, int windowSizeY, float userThickness) {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_CreateWindowAndRenderer(windowSizeX, windowSizeY, 0, &window, &renderer);
 	SDL_RenderSetScale(renderer, 1, 1); //initialize window
-
-	//SDL_SetRenderDrawColor(renderer, 0, 0, 128, 255); //set color to blue
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD); // sets colors to additive blend
+	thickness = userThickness;
 }
 
 void drawVec(SDL_Point pts[], SDL_Color color) {
