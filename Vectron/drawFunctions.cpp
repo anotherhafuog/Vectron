@@ -45,15 +45,24 @@ void drawVec(SDL_Point pts[], SDL_Color color) {
 	SDL_RenderGeometry(renderer, nullptr, verts, 4, indices, 6); //draw
 }
 
-void drawVectorPic(SDL_Point verts[], int indices[], int indiceCt, SDL_Color color, int scaleFactor) {
+void drawVectorPic(SDL_Point verts[], int indices[], int indiceCt, SDL_Color color) {
 	for (int i = 0; i < indiceCt - 1; i += 2) {
 		SDL_Point pts[2] = {verts[indices[i]],verts[indices[i+1]]};
 		drawVec(pts, color);
 	} //read two indices, get the points from verts and draw a line between
 }
 
-void scaleVectorPic(SDL_Point verts[], int scaleFactor){  //must pass verts by reference!!!
+void transformPoints(const SDL_Point localPts[], SDL_Point* worldPts, int ptCt, SDL_Point center, float scale, float angle) {
+	float cs = cosf(angle);
+	float sn = sinf(angle);
 
+	for (int i = 0; i < ptCt; i++) {
+		float x = localPts[i].x * scale;
+		float y = localPts[i].y * scale;
+
+		worldPts[i].x = (int)(x * cs - y * sn + center.x);
+		worldPts[i].y = (int)(x * sn + y * cs + center.y);
+	}
 }
 
 void renderFrame() {

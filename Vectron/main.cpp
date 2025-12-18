@@ -14,21 +14,35 @@ int main() {
 
 	SDL_Point line2[2] = { {500, 500}, {900, 200} };
 
-	SDL_Point shipPts[4] = { {900, 900}, {850, 1000}, {900, 975}, {950, 1000}};
+	struct {
 
-	const int shipIndiceCt = 8;
-	int shipIndices[shipIndiceCt] = { 0, 1, 1, 2, 2, 3, 3, 0 };
+		SDL_Point center = { 400, 450 };
+
+		const int ptCt = 4;
+
+		SDL_Point localPts[4] = { {0, -25}, {-25, 50}, {0, 25}, {25, 50} };
+		SDL_Point worldPts[4];
+
+		const int indiceCt = 8;
+		int indices[8] = { 0, 1, 1, 2, 2, 3, 3, 0 };
+	} ship;
 
 	drawVec(line1, halfBlue);
-	drawVec(line2, halfBlue); //eventually all draw commands will be obfuscated
+	drawVec(line2, halfBlue); //eventually all draw commands will be obfuscated from the game logic
 
 	renderFrame();
 
-	drawVectorPic(shipPts, shipIndices, shipIndiceCt, halfBlue, 1);
+	transformPoints(ship.localPts, ship.worldPts, ship.ptCt, ship.center, 1.0, 0.0);
+
+	drawVectorPic(ship.worldPts, ship.indices, ship.indiceCt, halfBlue);
 
 	renderFrame();
 
 	clearScreen(); //make screen black
+
+	transformPoints(ship.localPts, ship.worldPts, ship.ptCt, ship.center, 2.0, 3.1415/4.0);
+
+	drawVectorPic(ship.worldPts, ship.indices, ship.indiceCt, halfBlue);
 
 	renderFrame();
 
