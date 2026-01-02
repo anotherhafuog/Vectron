@@ -63,6 +63,14 @@ void transformPoints(const SDL_Point localPts[], SDL_Point* worldPts, int ptCt, 
 	}
 }
 
+void printChar(unsigned char theChar, SDL_Point pt, SDL_Color color, float scale) {
+
+}
+
+void printString(string theString, SDL_Point pt, SDL_Color color, float scale) {
+
+}
+
 void renderFrame() {
 	SDL_RenderPresent(renderer);
 	SDL_Delay(3000); //better time function will come soon
