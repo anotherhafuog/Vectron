@@ -63,12 +63,29 @@ void transformPoints(const SDL_Point localPts[], SDL_Point* worldPts, int ptCt, 
 	}
 }
 
-void printChar(unsigned char theChar, SDL_Point pt, SDL_Color color, float scale) {
-
+void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float scale) {
+	struct{
+		SDL_Point localPts[1] = {{0,0}}; //make this array later once I know the max # of pts per char
+		SDL_Point worldPts[1] = {{0,0}}; //make this array later
+		int ptCt;
+		int indiceCt;
+		int indices[1] = {0}; //make this array later
+	}letter;
+	switch (theChar) {
+	case 'A':
+		//assign local points
+		break;
+		//...
+	}
+	transformPoints(letter.localPts, letter.worldPts, letter.ptCt, centerPt, scale, 0);
+	drawVectorPic(letter.worldPts, letter.indices, letter.indiceCt, color);
 }
 
 void printString(string theString, SDL_Point pt, SDL_Color color, float scale) {
-
+	for (char& c : theString) {
+		printChar(c, pt, color, scale);
+		//iterate pt by some amount based on scale
+	}
 }
 
 void renderFrame() {
