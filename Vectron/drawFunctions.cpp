@@ -1,4 +1,5 @@
 #include "drawFunctions.h"
+using namespace std;
 
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
@@ -14,12 +15,12 @@ void initWindow(int windowSizeX, int windowSizeY, float userThickness) {
 	thickness = userThickness;
 }
 
-void drawVec(SDL_Point pts[], SDL_Color color) {
-	float x0 = pts[0].x;
-	float x1 = pts[1].x;
+void drawVec(const SDL_Point pt0, const SDL_Point pt1, SDL_Color color) {
+	float x0 = pt0.x;
+	float x1 = pt1.x;
 
-	float y0 = pts[0].y;
-	float y1 = pts[1].y;// define points from struct
+	float y0 = pt0.y;
+	float y1 = pt1.y;// define points from struct
 
 	float dx = x1 - x0;
 	float dy = y1 - y0;
@@ -43,14 +44,14 @@ void drawVec(SDL_Point pts[], SDL_Color color) {
 	SDL_RenderGeometry(renderer, nullptr, verts, 4, indices, 6); //draw
 }
 
-void drawVectorPic(SDL_Point verts[], int indices[], int indiceCt, SDL_Color color) {
+void drawVectorPic(const vector<SDL_Point> &verts, const vector<int> &indices, int indiceCt, SDL_Color color) {
 	for (int i = 0; i < indiceCt - 1; i += 2) {
-		SDL_Point pts[2] = {verts[indices[i]],verts[indices[i+1]]};
-		drawVec(pts, color);
+		drawVec(verts[indices[i]], verts[indices[i + 1]], color);
 	} //read two indices, get the points from verts and draw a line between
 }
 
-void transformPoints(const SDL_Point localPts[], SDL_Point* worldPts, int ptCt, SDL_Point center, float scale, float angle) {
+void transformPoints(const vector<SDL_Point> &localPts, vector<SDL_Point> &worldPts, int ptCt, SDL_Point center, float scale, float angle) {
+	worldPts.resize(ptCt);
 	float cs = cosf(angle);
 	float sn = sinf(angle);
 
@@ -65,11 +66,11 @@ void transformPoints(const SDL_Point localPts[], SDL_Point* worldPts, int ptCt, 
 
 void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float scale) {
 	struct{
-		SDL_Point localPts[1] = {{0,0}}; //make this array later once I know the max # of pts per char
-		SDL_Point worldPts[1] = {{0,0}}; //make this array later
+		vector<SDL_Point> localPts = {{0,0}}; //make this array later
+		vector<SDL_Point> worldPts = {{0,0}}; //make this array later
 		int ptCt;
 		int indiceCt;
-		int indices[1] = {0}; //make this array later
+		vector<int> indices = {0}; //make this array later
 	}letter;
 	switch (theChar) {
 	case 'A':
@@ -90,7 +91,6 @@ void printString(string theString, SDL_Point pt, SDL_Color color, float scale) {
 
 void renderFrame() {
 	SDL_RenderPresent(renderer);
-	SDL_Delay(3000); //better time function will come soon
 }
 
 void clearScreen() {
