@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 	
-void initWindow(int, int, float); 
+void initWindow(int, int, Uint32, float); 
 //initializes the window to a size int x and int y with a line thickness initialized
 void drawVec(const SDL_Point, const SDL_Point, SDL_Color); 
 //draws a rectangle from two points to emulate a vector line being drawn

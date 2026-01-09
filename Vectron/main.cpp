@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 
-	initWindow(1920, 1080, 4.0);
+	initWindow(1920, 1080, SDL_WINDOW_FULLSCREEN_DESKTOP, 4.0);
 	//defines colors (r,g,b, alpha)
 	SDL_Color halfBlue = { 0, 0, 128, 255 }; //todo: make color table and brightness manip functions
 	SDL_Color halfRed = { 128, 0, 0, 255 }; //todo: make color table and brightness manip functions

@@ -7,9 +7,9 @@ SDL_Renderer* renderer = nullptr;
 float thickness;
 
 
-void initWindow(int windowSizeX, int windowSizeY, float userThickness) {
+void initWindow(int windowSizeX, int windowSizeY, Uint32 flags, float userThickness) {
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_CreateWindowAndRenderer(windowSizeX, windowSizeY, 0, &window, &renderer);
+	SDL_CreateWindowAndRenderer(windowSizeX, windowSizeY, flags, &window, &renderer);
 	SDL_RenderSetScale(renderer, 1, 1); //initialize window
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD); // sets colors to additive blend
 	thickness = userThickness;
