@@ -62,7 +62,7 @@ int main() {
 
 	drawVectorPic(ship.worldPts, ship.indices, ship.indiceCt, halfBlue);
 
-	printString("jim0123456789", { 400, 800 }, {255, 255, 255, 128}, 8);
+	printString("%$@0123456789AB", { 400, 800 }, {255, 255, 255, 128}, 8);
 
 	renderFrame();
 	SDL_Delay(2000);

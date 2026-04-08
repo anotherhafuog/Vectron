@@ -7,6 +7,7 @@ SDL_Renderer* renderer = nullptr;
 float thickness;
 
 
+
 void initWindow(int windowSizeX, int windowSizeY, Uint32 flags, float userThickness) {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_CreateWindowAndRenderer(windowSizeX, windowSizeY, flags, &window, &renderer);
@@ -65,16 +66,20 @@ void transformPoints(const vector<SDL_Point> &localPts, vector<SDL_Point> &world
 }
 
 void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float scale) {
-	vector<SDL_Point> worldPts; 
-	if ((theChar < 48) || (theChar > 57)) {
-		transformPoints({{0,0}, {8,0}, {8,6}, {0,6}, {0,8}, {0,10}, {0,12}},
-			worldPts, 7, centerPt, scale, 0);
-		drawVectorPic(worldPts, {0,1,1,2,2,3,3,4,5,6}, 10, color);
-	}// draw ?
-	else {
-		int letterIndex = theChar - 48;
+	vector<SDL_Point> worldPts;
+	const int charArrSize = 12;
+	int letterIndex = -1;
 
-		vector<SDL_Point> charVecs[10] = {
+	if (theChar >= 48 && theChar <= 57) {
+		letterIndex = theChar - 48;       // digits 0-9
+	}
+	else if (theChar >= 65 && theChar <= 90) {
+		letterIndex = theChar - 65 + 10;  // letters, A=10, B=11, etc.
+	}
+
+	if (letterIndex >= 0 && letterIndex < charArrSize) {
+
+		vector<SDL_Point> charVecs[charArrSize] = {
 			{{0,0}, {8,0}, {8,12}, {0,12}}, //0
 			{{4,0}, {4,12}}, //1
 			{{0,0}, {8,0}, {8,6}, {0,6}, {0,12}, {8,12}}, //2
@@ -84,10 +89,12 @@ void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float
 			{{0,0}, {0,12}, {8,12}, {8,6}, {0,6}}, //6
 			{{0,0}, {8,0}, {8,12}}, //7
 			{{0,0}, {8,0}, {8,12}, {0,12}, {0,6}, {8,6}}, //8
-			{{8,0}, {0,0}, {0,6}, {8,6}, {8,12}} //9
+			{{8,0}, {0,0}, {0,6}, {8,6}, {8,12}}, //9
+			{{0,12}, {0,4}, {4,0}, {8,4}, {8,12}, {0,6}, {8,6}}, //A
+			{{0,0}, {6,0}, {8,2}, {8,4}, {6,6}, {0,6}, {8,8}, {8,10}, {6,12}, {0,12}} //B
 		};
 
-		vector <int> charIndices[10] = {
+		vector <int> charIndices[charArrSize] = {
 			{0,1,1,2,2,3,3,0}, //0
 			{0,1}, //1
 			{0,1,1,2,2,3,3,4,4,5}, //2
@@ -97,10 +104,12 @@ void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float
 			{0,1,1,2,2,3,3,4}, //6
 			{0,1,1,2}, //7
 			{0,1,1,2,2,3,3,0,4,5}, //8
-			{0,1,1,2,2,3,0,4} //9
+			{0,1,1,2,2,3,0,4}, //9
+			{0,1,1,2,2,3,3,4,5,6}, //A
+			{0,1,1,2,2,3,3,4,4,5,4,6,6,7,7,8,8,9,9,0} //B
 		};
 
-		int charPtCt[10] = {
+		int charPtCt[charArrSize] = {
 			4, //0
 			2, //1
 			6, //2
@@ -110,10 +119,12 @@ void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float
 			5, //6
 			3, //7
 			6, //8
-			5 //9
+			5, //9
+			7, //A
+			10 //B
 		};
 
-		int charIndiceCt[10] = {
+		int charIndiceCt[charArrSize] = {
 			8, //0
 			2, //1
 			10, //2
@@ -123,12 +134,19 @@ void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float
 			8, //6
 			4, //7
 			10, //8
-			8 //9
+			8, //9
+			10, //A
+			20 //B
 		};
 
 		transformPoints(charVecs[letterIndex], worldPts, charPtCt[letterIndex], centerPt, scale, 0);
 		drawVectorPic(worldPts, charIndices[letterIndex], charIndiceCt[letterIndex], color);
 	}
+	else {
+		transformPoints({ {0,0}, {8,0}, {8,6}, {0,6}, {0,8}, {0,10}, {0,12} },
+			worldPts, 7, centerPt, scale, 0);
+		drawVectorPic(worldPts, { 0,1,1,2,2,3,3,4,5,6 }, 10, color);
+	}// draw ?
 }
 
 void printString(string theString, SDL_Point pt, SDL_Color color, float scale) {
