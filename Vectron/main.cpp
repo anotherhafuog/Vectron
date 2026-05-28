@@ -54,18 +54,17 @@ int main() {
 
 	drawVec(line1[0], line1[1], halfBlue);
 	drawVec(line2[0], line2[1], halfBlue); //eventually all draw commands will be obfuscated from the game logic
+	//drawVec({ 100,100 }, { 100,101 }, { 255, 255, 255, 255 }); // point draw test
 
 	renderFrame();
-	SDL_Delay(2000);
+	SDL_Delay(1000);
 
 	transformPoints(ship.localPts, ship.worldPts, ship.ptCt, ship.center, 1.0, 0.0);
 
 	drawVectorPic(ship.worldPts, ship.indices, ship.indiceCt, halfBlue);
 
-	printString("%$@0123456789AB", { 400, 800 }, {255, 255, 255, 128}, 8);
-
 	renderFrame();
-	SDL_Delay(2000);
+	SDL_Delay(1000);
 
 	clearScreen(); //make screen black
 
@@ -78,7 +77,14 @@ int main() {
 	drawVectorPic(face.worldPts, face.indices, face.indiceCt, halfRed);
 
 	renderFrame();
-	SDL_Delay(2000);
+	SDL_Delay(1000);
+
+	clearScreen(); //make screen black
+
+	printString("%$@0123456789ABCDEFG", { 10, 10 }, { 255, 255, 255, 128 }, 8);
+	printString("HIJKLMNOPQRSTUVWXYZ", { 10, 150 }, { 255, 255, 255, 128 }, 8);
+	renderFrame();
+	SDL_Delay(20000);
 
 	killRender();
 
