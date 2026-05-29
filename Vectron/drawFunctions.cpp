@@ -239,6 +239,9 @@ void printChar(unsigned char theChar, SDL_Point centerPt, SDL_Color color, float
 		transformPoints(charVecs[letterIndex], worldPts, charPtCt[letterIndex], centerPt, scale, 0);
 		drawVectorPic(worldPts, charIndices[letterIndex], charIndiceCt[letterIndex], color);
 	}
+	else if (theChar == ' ') {
+		//do nothing
+	}
 	else {
 		transformPoints({ {0,0}, {8,0}, {8,6}, {0,6}, {0,8}, {0,10}, {0,12} },
 			worldPts, 7, centerPt, scale, 0);

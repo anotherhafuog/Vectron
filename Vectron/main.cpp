@@ -81,10 +81,10 @@ int main() {
 
 	clearScreen(); //make screen black
 
-	printString("%$@0123456789ABCDEFG", { 10, 10 }, { 255, 255, 255, 128 }, 8);
+	printString("%$@ 0123456789ABCDEFG", { 10, 10 }, { 255, 255, 255, 128 }, 8);
 	printString("HIJKLMNOPQRSTUVWXYZ", { 10, 150 }, { 255, 255, 255, 128 }, 8);
 	renderFrame();
-	SDL_Delay(20000);
+	SDL_Delay(5000);
 
 	killRender();
 
